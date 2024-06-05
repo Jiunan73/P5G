@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Vue Image Slider</title>
+    <script src=".\js\vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{currentImage}}    {{X_Val}}
+        <svg width="500" height="500">
+            <image v-for="(image, index) in images" 
+                   :xlink:href="image" 
+                   width="500"
+                   :width="500"
+                   height="500" 
+                   v-show="currentImage === index" />
+                <a href="#" @click="ChangeImages()">Next Image</a>
+                <a href="#" @click="ChangeImages()">Previous Image</a>
+        </svg>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                currentImage: 4,
+                X_Val:0,
+                images: [
+                    './map/map1.jpg',
+                    './map/map2.jpg',
+                    './map/map3.jpg',
+                    './map/map4.jpg',
+                    './map/map5.jpg',
+                    './map/map6.jpg',
+                    './map/map7.jpg',
+                    // ... 其他圖片的 URL
+                ]
+            },
+            methods: {
+                changeImage: function(direction) {
+                    if (direction === 'left') {
+                        this.currentImage = (this.currentImage + 1) % this.images.length;
+                    } else if (direction === 'right') {
+                        this.currentImage = (this.currentImage - 1 + this.images.length) % this.images.length;
+                    }
+                },
+                updateImages: function(imgpath) {
+                    fetch('https://example.com/images')
+                        .then(response => response.json())
+                        .then(data => {
+                            const newImages = data.map(image => image.url);
+                            this.images = newImages;
+                        })
+                        .catch(error => {
+                            console.error('Error fetching images:', error);
+                        });
+                    const newImages = this.images.filter(image => image.startsWith('img'));
+                    this.images = newImages;
+                }
+             
+            },
+            mounted: function() {
+                const svg = document.querySelector('svg');
+                let startX = 0;
+
+                svg.addEventListener('mousedown', (event) => {
+                    startX = event.clientX;
+                });
+
+                svg.addEventListener('mouseup', (event) => {
+                    const endX = event.clientX;
+                    this.X_Val=endX-startX
+                    if (endX > startX) {
+                        this.changeImage('right');
+                    } else if (endX < startX) {
+                        this.changeImage('left');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
