@@ -1,0 +1,33 @@
+opencv-python==4.4.0.46
+opencv-contrib-python==4.4.0.46
+requests>=2.31.0
+pillow>=10.3.0
+# stitching
+imutils
+# matplotlib
+
+# # ONVIF
+# Install python-onvif\-zeep
+zeep >= 3.0.0
+# cd python-onvif-zeep && python setup.py install
+# pip install --upgrade onvif_zeep
+
+#copy  \env\Lib\site-packages\onvif_zeep-0.2.12-py3.8.egg\Lib\site-packages\wsdl to \env\Lib\site-packages\onvif_zeep-0.2.12-py3.8.egg\
+
+# # GigE Vision
+
+# # Flask
+flask
+flask_wtf
+flask_sqlalchemy
+Flask-RESTful
+
+# # Beckhoff ADS
+pyads
+
+# # EquiView360
+# pyqt5
+# pyopengl
+
+# mysql
+pymysql
